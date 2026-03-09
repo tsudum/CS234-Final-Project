@@ -1,0 +1,10 @@
+torch
+numpy
+gymnasium
+minerl
+stable-baselines3
+opencv-python
+pyyaml
+tqdm
+matplotlib
+shimmy
