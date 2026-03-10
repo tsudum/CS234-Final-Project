@@ -1,3 +1,4 @@
+import os
 import gym
 import minerl
 import numpy as np
@@ -12,6 +13,7 @@ class TreechopEnv:
     - convert the MineRL action dictionary into a small discrete action space
     - preprocess observations into grayscale 64x64 frames
     - track how often the agent appears to be looking at a tree
+    - record episode frames so the training script can choose which runs to save
     """
 
     def __init__(
@@ -20,14 +22,17 @@ class TreechopEnv:
         frame_stack=4,
         max_episode_steps=1000,
         extra_log_reward=50.0,
+        tree_in_view_bonus=0.005,
+        centered_log_bonus=0.02,
+        attack_on_target_bonus=0.04,
         forward_attack_bonus=0.02,
-        tree_in_view_bonus=0.01,
-        centered_log_bonus=0.04,
-        attack_on_target_bonus=0.08,
-        pickup_followthrough_bonus=0.12,
+        pickup_followthrough_bonus=0.25,
         time_penalty=0.005,
         break_streak_threshold=20,
-        break_window_length=8,
+        break_window_length=16,
+        save_videos=True,
+        video_fps=30,
+        video_scale=20,
     ):
         self.env = gym.make("MineRLTreechop-v0")
 
@@ -73,6 +78,23 @@ class TreechopEnv:
         # store latest raw pov frame for debug
         self.latest_raw_frame = None
 
+        # sparse reward environment problems...
+        self.ever_likely_broke_log = False
+        self.ever_likely_broke_but_no_reward = False
+
+        # video settings
+        self.save_videos = save_videos
+        self.video_fps = video_fps
+        self.video_scale = video_scale
+        self.episode_video_frames = []
+        self.episode_video_index = 0
+
+        current_file_directory = os.path.dirname(os.path.abspath(__file__))
+        self.video_directory = os.path.join(current_file_directory, "videos")
+
+        if self.save_videos:
+            os.makedirs(self.video_directory, exist_ok=True)
+
     def buildDiscreteActions(self):
         """
         use a smaller action space so exploration is less wasteful
@@ -102,20 +124,20 @@ class TreechopEnv:
         # action 4: repeated attack macro
         action = self.makeNoopAction()
         action["attack"] = 1
-        action["_repeat"] = 8
+        action["_repeat"] = 20
         discrete_actions.append(action)
 
         # action 5: repeated forward + attack macro
         action = self.makeNoopAction()
         action["forward"] = 1
         action["attack"] = 1
-        action["_repeat"] = 8
+        action["_repeat"] = 20
         discrete_actions.append(action)
 
         # action 6: repeated forward-only pickup macro
         action = self.makeNoopAction()
         action["forward"] = 1
-        action["_repeat"] = 6
+        action["_repeat"] = 20
         discrete_actions.append(action)
 
         return discrete_actions
@@ -173,7 +195,7 @@ class TreechopEnv:
 
     def getWoodMask(self, frame):
         """
-        detect likely trunk-colored pixels using a simple color heuristic
+        detect likely trunk-colored pixels using a color heuristic
         """
         red_channel = frame[:, :, 0]
         green_channel = frame[:, :, 1]
@@ -247,9 +269,9 @@ class TreechopEnv:
         brown_fraction = np.mean(brown_mask)
 
         if self.log_centered_last_step:
-            log_centered = brown_fraction > 0.12
+            log_centered = brown_fraction > 0.16
         else:
-            log_centered = brown_fraction > 0.18
+            log_centered = brown_fraction > 0.22
 
         self.log_centered_last_step = log_centered
         return log_centered
@@ -286,11 +308,6 @@ class TreechopEnv:
     def updateRecentBreakWindow(self, action_dictionary, log_centered):
         """
         open a short pickup window after a likely break event
-
-        intuition:
-        - if we previously had a long centered attack streak
-        - and now the target is no longer centered or attack is no longer active
-        - then assume the block may have broken
         """
         likely_just_broke = (
             self.previous_centered_attack_streak >= self.break_streak_threshold
@@ -302,8 +319,11 @@ class TreechopEnv:
 
         if likely_just_broke:
             self.recent_break_window = self.break_window_length
+            self.ever_likely_broke_log = True
         elif self.recent_break_window > 0:
             self.recent_break_window -= 1
+
+        return likely_just_broke
 
     def computeShapedReward(
         self,
@@ -353,16 +373,92 @@ class TreechopEnv:
             shaped_reward += 0.18
 
         # small bonus for moving into the tree while attacking and centered
-        if (action_dictionary["attack"] == 1 and action_dictionary["forward"] == 1 and log_centered):
+        if (
+            action_dictionary["attack"] == 1
+            and action_dictionary["forward"] == 1
+            and log_centered
+        ):
             shaped_reward += self.forward_attack_bonus
 
         # if we likely just broke a log, encourage moving forward to collect it
         if self.recent_break_window > 0 and action_dictionary["forward"] == 1:
             shaped_reward += self.pickup_followthrough_bonus
 
+        # discourage wasting the break window by continuing to throw punches
+        if self.recent_break_window > 0 and action_dictionary["attack"] == 1:
+            shaped_reward -= 0.03
+
         shaped_reward -= self.time_penalty
 
         return shaped_reward
+
+    # video code to help figure out why no env reward -------
+
+    def recordVideoFrame(self, observation):
+        """
+        save the raw pov frame for episode video generation
+        """
+        if not self.save_videos:
+            return
+
+        raw_frame = observation["pov"].copy()
+        self.episode_video_frames.append(raw_frame)
+
+    def saveEpisodeVideo(self):
+        """
+        write the current episode frames to an mp4 file
+        """
+        if not self.save_videos:
+            return
+
+        if len(self.episode_video_frames) == 0:
+            return
+
+        first_frame = self.episode_video_frames[0]
+        frame_height, frame_width, _ = first_frame.shape
+
+        scaled_width = frame_width * self.video_scale
+        scaled_height = frame_height * self.video_scale
+
+        video_path = os.path.join(
+            self.video_directory,
+            f"treechop_episode_{self.episode_video_index:04d}.mp4",
+        )
+
+        fourcc = cv2.VideoWriter_fourcc(*"mp4v")
+        video_writer = cv2.VideoWriter(
+            video_path,
+            fourcc,
+            float(self.video_fps),
+            (scaled_width, scaled_height),
+        )
+
+        print(f"original frame size: {frame_width}x{frame_height}")
+        print(f"scaled video size: {scaled_width}x{scaled_height}")
+        print(f"saved episode video to {video_path}")
+
+        for rgb_frame in self.episode_video_frames:
+            enlarged_rgb_frame = cv2.resize(
+                rgb_frame,
+                (scaled_width, scaled_height),
+                interpolation=cv2.INTER_NEAREST,
+            )
+
+            bgr_frame = cv2.cvtColor(enlarged_rgb_frame, cv2.COLOR_RGB2BGR)
+            video_writer.write(bgr_frame)
+
+        video_writer.release()
+
+        self.episode_video_frames = []
+        self.episode_video_index += 1
+
+    def discardEpisodeVideo(self):
+        """
+        discard recorded frames for the current episode
+        """
+        self.episode_video_frames = []
+
+    # video code to help figure out why no env reward -------
 
     def reset(self):
         """
@@ -379,6 +475,13 @@ class TreechopEnv:
         # reset tree-view tracking metrics
         self.tree_view_step_count = 0
         self.tree_view_fraction = 0.0
+
+        self.ever_likely_broke_log = False
+        self.ever_likely_broke_but_no_reward = False
+
+        # reset video buffer for the new episode and record the first frame
+        self.episode_video_frames = []
+        self.recordVideoFrame(raw_observation)
 
         processed_frame = self.preprocessFrame(raw_observation)
         self.initFrameStack(processed_frame)
@@ -403,22 +506,35 @@ class TreechopEnv:
         log_centered = False
         centered_attack_streak = 0
 
+        likely_broke_this_step = False
+
         for _ in range(repeat_count):
             raw_observation, env_reward, done, info = self.env.step(action_dictionary)
 
             self.current_step += 1
             total_env_reward += env_reward
 
+            self.recordVideoFrame(raw_observation)
+
             processed_frame = self.preprocessFrame(raw_observation)
             self.stacked_frames.append(processed_frame)
 
             tree_in_view = self.updateTreeViewMetrics()
             log_centered = self.isLogCentered()
+
             centered_attack_streak = self.updateCenteredAttackStreak(
                 action_dictionary,
                 log_centered,
             )
-            self.updateRecentBreakWindow(action_dictionary, log_centered)
+
+            likely_just_broke = self.updateRecentBreakWindow(
+                action_dictionary,
+                log_centered,
+            )
+
+            if likely_just_broke:
+                likely_broke_this_step = True
+                self.ever_likely_broke_log = True
 
             step_shaped_reward = self.computeShapedReward(
                 env_reward,
@@ -427,6 +543,7 @@ class TreechopEnv:
                 log_centered,
                 centered_attack_streak,
             )
+
             total_shaped_reward += step_shaped_reward
 
             if done or self.current_step >= self.max_episode_steps:
@@ -434,6 +551,13 @@ class TreechopEnv:
                 break
 
         stacked_observation = self.getStackedObservation()
+
+        likely_broke_but_no_reward = (
+            self.ever_likely_broke_log
+            and total_env_reward <= 0.0
+        )
+
+        self.ever_likely_broke_but_no_reward = likely_broke_but_no_reward
 
         info["env_reward"] = float(total_env_reward)
         info["shaped_reward"] = float(total_shaped_reward)
@@ -447,6 +571,11 @@ class TreechopEnv:
         info["tree_view_fraction"] = float(self.tree_view_fraction)
         info["recent_break_window"] = int(self.recent_break_window)
         info["previous_centered_attack_streak"] = int(self.previous_centered_attack_streak)
+
+        # sparse world problems, extra metrics to help
+        info["likely_broke_this_step"] = bool(likely_broke_this_step)
+        info["ever_likely_broke_log"] = bool(self.ever_likely_broke_log)
+        info["likely_broke_but_no_reward"] = bool(likely_broke_but_no_reward)
 
         return stacked_observation, total_shaped_reward, done, info
 
@@ -466,4 +595,5 @@ class TreechopEnv:
         """
         close the environment
         """
+        self.discardEpisodeVideo()
         self.env.close()
