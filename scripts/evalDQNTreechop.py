@@ -8,7 +8,7 @@ import numpy as np
 import cv2
 
 from src.envs.treechopEnv import TreechopEnv
-from src.agents.PPOAgent import PPOAgent
+from src.agents.DQNAgent import DQNAgent
 
 
 def appendEpisodeMetrics(csv_path, episode_metrics):
@@ -30,6 +30,23 @@ def writeSummaryCsv(csv_path, summary_metrics):
         writer.writerow(summary_metrics)
 
 
+def selectGreedyAction(agent, observation, device="cpu"):
+    """
+    lets choose the best action
+    """
+    state_tensor = torch.tensor(
+        observation,
+        dtype=torch.float32,
+        device=device,
+    ).unsqueeze(0)
+
+    with torch.no_grad():
+        q_values = agent.q_network(state_tensor)
+        action = torch.argmax(q_values, dim=1).item()
+
+    return action
+
+
 def runEpisode(env, agent, device="cpu", video_path=None):
     observation = env.reset()
     done = False
@@ -49,7 +66,7 @@ def runEpisode(env, agent, device="cpu", video_path=None):
     recent_break_window_final = 0
 
     while not done:
-        action, _, _ = agent.selectAction(observation)
+        action = selectGreedyAction(agent, observation, device=device)
         observation, reward, done, info = env.step(action)
 
         total_shaped_reward += reward
@@ -108,17 +125,17 @@ def runEpisode(env, agent, device="cpu", video_path=None):
 
 
 def main():
-    checkpoint_path = "checkpoints/ppo_treechop_final.pt"
+    checkpoint_path = "checkpoints/dqn_treechop_final.pt"
     num_eval_episodes = 20
-    video_dir = "videos/eval_ppo"
+    video_dir = "videos/eval_dqn"
     log_dir = "logs"
     device = "cpu"
 
     os.makedirs(video_dir, exist_ok=True)
     os.makedirs(log_dir, exist_ok=True)
 
-    episode_csv_path = os.path.join(log_dir, "eval_ppo_treechop_episodes.csv")
-    summary_csv_path = os.path.join(log_dir, "eval_ppo_treechop_summary.csv")
+    episode_csv_path = os.path.join(log_dir, "eval_dqn_treechop_episodes.csv")
+    summary_csv_path = os.path.join(log_dir, "eval_dqn_treechop_summary.csv")
 
     # remove old episode csv so this run starts fresh
     if os.path.exists(episode_csv_path):
@@ -126,18 +143,18 @@ def main():
 
     env = TreechopEnv()
 
-    agent = PPOAgent(
+    agent = DQNAgent(
         state_channels=env.frame_stack,
         num_actions=env.num_actions,
         device=device,
     )
 
     if os.path.exists(checkpoint_path):
-        agent.network.load_state_dict(torch.load(checkpoint_path, map_location=device))
-        agent.network.eval()
+        agent.q_network.load_state_dict(torch.load(checkpoint_path, map_location=device))
+        agent.q_network.eval()
         print(f"loaded checkpoint: {checkpoint_path}")
     else:
-        print("no checkpoint found, evaluating current policy")
+        print("no checkpoint found") 
 
     print(f"running {num_eval_episodes} evaluation episodes...")
 
