@@ -1,0 +1,461 @@
+(.venv) andoan@a18a:~/win26/CS234-Final-Project$ ^C
+(.venv) andoan@a18a:~/win26/CS234-Final-Project$ python scripts/trainPPOTreechop.py --bc-init
+loaded BC pretrained weights from checkpoints/bc_pretrained_new.pt
+/home/andoan/.local/share/uv/python/cpython-3.9.25-linux-x86_64-gnu/lib/python3.9/runpy.py:127: RuntimeWarning: 'minerl.utils.process_watcher' found in sys.modules after import of package 'minerl.utils', but prior to execution of 'minerl.utils.process_watcher'; this may result in unpredictable behaviour
+  warn(RuntimeWarning(msg))
+episode 0000
+  steps: 275
+  total env reward: 0.00
+  total shaped reward: 7.95
+  tree view steps: 232
+  tree view fraction: 0.2320
+  ever log centered: True
+  max centered attack streak: 16
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 4
+  most used action count: 80
+  action counts: [26, 8, 64, 63, 80, 1, 33]
+  avg policy loss: -0.007830
+  avg value loss: 1.201263
+  avg entropy: 1.452463
+episode 0001
+  steps: 275
+  total env reward: 0.00
+  total shaped reward: 22.55
+  tree view steps: 410
+  tree view fraction: 0.4100
+  ever log centered: True
+  max centered attack streak: 24
+  ever reached break threshold: True
+  ever break window: True
+  break window active steps: 1
+  max recent break window: 8
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 4
+  most used action count: 84
+  action counts: [65, 2, 34, 63, 84, 4, 23]
+  avg policy loss: 0.000703
+  avg value loss: 4.958900
+  avg entropy: 1.538022
+episode 0002
+  steps: 190
+  total env reward: 0.00
+  total shaped reward: -4.73
+  tree view steps: 11
+  tree view fraction: 0.0110
+  ever log centered: True
+  max centered attack streak: 0
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 4
+  most used action count: 103
+  action counts: [20, 1, 34, 15, 103, 3, 14]
+  avg policy loss: 0.015779
+  avg value loss: 0.365623
+  avg entropy: 1.227755
+episode 0003
+  steps: 265
+  total env reward: 0.00
+  total shaped reward: 67.48
+  tree view steps: 665
+  tree view fraction: 0.6650
+  ever log centered: True
+  max centered attack streak: 40
+  ever reached break threshold: True
+  ever break window: True
+  break window active steps: 3
+  max recent break window: 8
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 4
+  most used action count: 70
+  action counts: [57, 12, 48, 34, 70, 14, 30]
+  avg policy loss: 0.001710
+  avg value loss: 18.546062
+  avg entropy: 1.539768
+episode 0004
+  steps: 437
+  total env reward: 0.00
+  total shaped reward: 30.19
+  tree view steps: 719
+  tree view fraction: 0.7190
+  ever log centered: True
+  max centered attack streak: 8
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 210
+  action counts: [210, 0, 88, 34, 7, 12, 86]
+  avg policy loss: 0.016083
+  avg value loss: 1.095117
+  avg entropy: 1.191137
+episode 0005
+  steps: 402
+  total env reward: 0.00
+  total shaped reward: -0.04
+  tree view steps: 198
+  tree view fraction: 0.1980
+  ever log centered: True
+  max centered attack streak: 3
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 193
+  action counts: [193, 5, 59, 35, 17, 8, 85]
+  avg policy loss: 0.053911
+  avg value loss: 0.480880
+  avg entropy: 1.511511
+episode 0006
+  steps: 378
+  total env reward: 0.00
+  total shaped reward: 6.67
+  tree view steps: 429
+  tree view fraction: 0.4290
+  ever log centered: True
+  max centered attack streak: 16
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 181
+  action counts: [181, 4, 69, 20, 27, 24, 53]
+  avg policy loss: -0.014317
+  avg value loss: 0.874549
+  avg entropy: 1.411188
+reset failed (attempt 1): timed out
+reset failed (attempt 2): timed out
+reset failed (attempt 3): timed out
+too many consecutive failures, restarting env...
+The XKEYBOARD keymap compiler (xkbcomp) reports:
+> Warning:          Could not resolve keysym XF86CameraAccessEnable
+> Warning:          Could not resolve keysym XF86CameraAccessDisable
+> Warning:          Could not resolve keysym XF86CameraAccessToggle
+> Warning:          Could not resolve keysym XF86NextElement
+> Warning:          Could not resolve keysym XF86PreviousElement
+> Warning:          Could not resolve keysym XF86AutopilotEngageToggle
+> Warning:          Could not resolve keysym XF86MarkWaypoint
+> Warning:          Could not resolve keysym XF86Sos
+> Warning:          Could not resolve keysym XF86NavChart
+> Warning:          Could not resolve keysym XF86FishingChart
+> Warning:          Could not resolve keysym XF86SingleRangeRadar
+> Warning:          Could not resolve keysym XF86DualRangeRadar
+> Warning:          Could not resolve keysym XF86RadarOverlay
+> Warning:          Could not resolve keysym XF86TraditionalSonar
+> Warning:          Could not resolve keysym XF86ClearvuSonar
+> Warning:          Could not resolve keysym XF86SidevuSonar
+> Warning:          Could not resolve keysym XF86NavInfo
+Errors from xkbcomp are not fatal to the X server
+/home/andoan/.local/share/uv/python/cpython-3.9.25-linux-x86_64-gnu/lib/python3.9/runpy.py:127: RuntimeWarning: 'minerl.utils.process_watcher' found in sys.modules after import of package 'minerl.utils', but prior to execution of 'minerl.utils.process_watcher'; this may result in unpredictable behaviour
+  warn(RuntimeWarning(msg))
+episode 0007
+  steps: 384
+  total env reward: 0.00
+  total shaped reward: -3.46
+  tree view steps: 90
+  tree view fraction: 0.0900
+  ever log centered: True
+  max centered attack streak: 2
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 208
+  action counts: [208, 5, 39, 31, 42, 17, 42]
+  avg policy loss: -0.001151
+  avg value loss: 0.229586
+  avg entropy: 1.449501
+episode 0008
+  steps: 357
+  total env reward: 0.00
+  total shaped reward: 6.29
+  tree view steps: 285
+  tree view fraction: 0.2850
+  ever log centered: True
+  max centered attack streak: 16
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 175
+  action counts: [175, 2, 51, 16, 25, 14, 74]
+  avg policy loss: -0.020494
+  avg value loss: 0.604184
+  avg entropy: 1.405753
+episode 0009
+  steps: 323
+  total env reward: 0.00
+  total shaped reward: 30.75
+  tree view steps: 459
+  tree view fraction: 0.4590
+  ever log centered: True
+  max centered attack streak: 16
+  ever reached break threshold: False
+  ever break window: True
+  break window active steps: 3
+  max recent break window: 5
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 152
+  action counts: [152, 11, 41, 12, 34, 39, 34]
+  avg policy loss: -0.040065
+  avg value loss: 5.147413
+  avg entropy: 1.481528
+  saved checkpoint to checkpoints/ppo_bc_treechop_episode_10.pt
+episode 0010
+  steps: 309
+  total env reward: 0.00
+  total shaped reward: 2.71
+  tree view steps: 148
+  tree view fraction: 0.1480
+  ever log centered: True
+  max centered attack streak: 8
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 117
+  action counts: [117, 0, 64, 11, 18, 36, 63]
+  avg policy loss: -0.014510
+  avg value loss: 1.373229
+  avg entropy: 1.387690
+episode 0011
+  steps: 246
+  total env reward: 0.00
+  total shaped reward: 22.69
+  tree view steps: 385
+  tree view fraction: 0.3850
+  ever log centered: True
+  max centered attack streak: 15
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 2
+  most used action count: 81
+  action counts: [38, 1, 81, 3, 60, 11, 52]
+  avg policy loss: -0.001958
+  avg value loss: 3.500354
+  avg entropy: 1.311746
+episode 0012
+  steps: 276
+  total env reward: 0.00
+  total shaped reward: 12.07
+  tree view steps: 810
+  tree view fraction: 0.8100
+  ever log centered: True
+  max centered attack streak: 8
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 104
+  action counts: [104, 2, 52, 3, 37, 39, 39]
+  avg policy loss: -0.006512
+  avg value loss: 3.741607
+  avg entropy: 1.581996
+episode 0013
+  steps: 246
+  total env reward: 0.00
+  total shaped reward: 83.09
+  tree view steps: 562
+  tree view fraction: 0.5620
+  ever log centered: True
+  max centered attack streak: 32
+  ever reached break threshold: True
+  ever break window: True
+  break window active steps: 3
+  max recent break window: 8
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 2
+  most used action count: 58
+  action counts: [53, 2, 58, 11, 37, 37, 48]
+  avg policy loss: 0.008871
+  avg value loss: 48.626093
+  avg entropy: 1.630695
+episode 0014
+  steps: 235
+  total env reward: 0.00
+  total shaped reward: 118.62
+  tree view steps: 568
+  tree view fraction: 0.5680
+  ever log centered: True
+  max centered attack streak: 48
+  ever reached break threshold: True
+  ever break window: True
+  break window active steps: 7
+  max recent break window: 8
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 5
+  most used action count: 60
+  action counts: [55, 0, 58, 3, 25, 60, 34]
+  avg policy loss: 0.028591
+  avg value loss: 77.822090
+  avg entropy: 1.450076
+episode 0015
+  steps: 225
+  total env reward: 0.00
+  total shaped reward: 25.55
+  tree view steps: 668
+  tree view fraction: 0.6680
+  ever log centered: True
+  max centered attack streak: 16
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 5
+  most used action count: 72
+  action counts: [55, 0, 51, 0, 18, 72, 29]
+  avg policy loss: 0.000604
+  avg value loss: 11.495989
+  avg entropy: 1.398569
+episode 0016
+  steps: 290
+  total env reward: 0.00
+  total shaped reward: 25.42
+  tree view steps: 723
+  tree view fraction: 0.7230
+  ever log centered: True
+  max centered attack streak: 8
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 133
+  action counts: [133, 0, 46, 2, 21, 62, 26]
+  avg policy loss: -0.009618
+  avg value loss: 13.669971
+  avg entropy: 1.352441
+episode 0017
+  steps: 238
+  total env reward: 0.00
+  total shaped reward: -5.00
+  tree view steps: 0
+  tree view fraction: 0.0000
+  ever log centered: False
+  max centered attack streak: 0
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 109
+  action counts: [109, 0, 15, 0, 24, 72, 18]
+  avg policy loss: 0.016452
+  avg value loss: 5.168640
+  avg entropy: 1.042740
+episode 0018
+  steps: 309
+  total env reward: 0.00
+  total shaped reward: -5.00
+  tree view steps: 0
+  tree view fraction: 0.0000
+  ever log centered: False
+  max centered attack streak: 0
+  ever reached break threshold: False
+  ever break window: False
+  break window active steps: 0
+  max recent break window: 0
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 0
+  most used action count: 208
+  action counts: [208, 0, 0, 0, 4, 90, 7]
+  avg policy loss: 0.012220
+  avg value loss: 7.584067
+  avg entropy: 0.723067
+episode 0019
+  steps: 187
+  total env reward: 0.00
+  total shaped reward: 199.93
+  tree view steps: 835
+  tree view fraction: 0.8350
+  ever log centered: True
+  max centered attack streak: 66
+  ever reached break threshold: True
+  ever break window: True
+  break window active steps: 12
+  max recent break window: 8
+  positive env reward steps: 0
+  positive env reward total: 0.00
+  most used action: 5
+  most used action count: 77
+  action counts: [59, 0, 4, 1, 23, 77, 23]
+  avg policy loss: 0.017189
+  avg value loss: 489.636887
+  avg entropy: 1.129343
+  saved checkpoint to checkpoints/ppo_bc_treechop_episode_20.pt
+saved final checkpoint to checkpoints/ppo_bc_treechop_final.pt
+The XKEYBOARD keymap compiler (xkbcomp) reports:
+> Warning:          Could not resolve keysym XF86CameraAccessEnable
+> Warning:          Could not resolve keysym XF86CameraAccessDisable
+> Warning:          Could not resolve keysym XF86CameraAccessToggle
+> Warning:          Could not resolve keysym XF86NextElement
+> Warning:          Could not resolve keysym XF86PreviousElement
+> Warning:          Could not resolve keysym XF86AutopilotEngageToggle
+> Warning:          Could not resolve keysym XF86MarkWaypoint
+> Warning:          Could not resolve keysym XF86Sos
+> Warning:          Could not resolve keysym XF86NavChart
+> Warning:          Could not resolve keysym XF86FishingChart
+> Warning:          Could not resolve keysym XF86SingleRangeRadar
+> Warning:          Could not resolve keysym XF86DualRangeRadar
+> Warning:          Could not resolve keysym XF86RadarOverlay
+> Warning:          Could not resolve keysym XF86TraditionalSonar
+> Warning:          Could not resolve keysym XF86ClearvuSonar
+> Warning:          Could not resolve keysym XF86SidevuSonar
+> Warning:          Could not resolve keysym XF86NavInfo
+Errors from xkbcomp are not fatal to the X server
+(.venv) andoan@a18a:~/win26/CS234-Final-Project$ git push
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 24 threads
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (9/9), 7.38 KiB | 7.38 MiB/s, done.
+Total 9 (delta 5), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (5/5), completed with 3 local objects.
+To github.com:tsudum/CS234-Final-Project.git
