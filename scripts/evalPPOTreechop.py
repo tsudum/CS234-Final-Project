@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import argparse
 import torch
 import numpy as np
 import cv2
@@ -56,9 +57,22 @@ def run_episode(env, agent, video_path=None):
 
 
 def main():
-    checkpoint_path = "checkpoints/ppo_treechop_final.pt"
-    num_eval_episodes = 10
-    video_dir = "videos/eval"
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--bc-init",
+        action="store_true",
+        help="evaluate the BC-initialized PPO checkpoint",
+    )
+    parser.add_argument(
+        "--num-episodes",
+        type=int,
+        default=10,
+    )
+    args = parser.parse_args()
+
+    run_name = "ppo_bc_treechop" if args.bc_init else "ppo_treechop"
+    checkpoint_path = f"checkpoints/{run_name}_final.pt"
+    video_dir = f"videos/eval_{run_name}"
     os.makedirs(video_dir, exist_ok=True)
 
     env = TreechopEnv()
@@ -74,12 +88,12 @@ def main():
         agent.network.eval()
         print(f"loaded checkpoint: {checkpoint_path}")
     else:
-        print("no checkpoint found, evaluating random policy")
+        print(f"no checkpoint found at {checkpoint_path}, evaluating random policy")
 
-    print(f"running {num_eval_episodes} evaluation episodes...\n")
+    print(f"running {args.num_episodes} evaluation episodes...\n")
 
     results = []
-    for i in range(num_eval_episodes):
+    for i in range(args.num_episodes):
         video_path = os.path.join(video_dir, f"episode_{i:03d}.mp4")
         result = run_episode(env, agent, video_path=video_path)
         results.append(result)

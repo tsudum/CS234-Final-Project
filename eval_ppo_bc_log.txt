@@ -1,0 +1,23 @@
+(.venv) andoan@a18a:~/win26/CS234-Final-Project$ python scripts/evalPPOTreechop.py --bc-init
+loaded checkpoint: checkpoints/ppo_bc_treechop_final.pt
+running 10 evaluation episodes...
+
+/home/andoan/.local/share/uv/python/cpython-3.9.25-linux-x86_64-gnu/lib/python3.9/runpy.py:127: RuntimeWarning: 'minerl.utils.process_watcher' found in sys.modules after import of package 'minerl.utils', but prior to execution of 'minerl.utils.process_watcher'; this may result in unpredictable behaviour
+  warn(RuntimeWarning(msg))
+ep 000 | shaped    0.75 | steps  399 | streak  10 | tree_view 0.22 | break_window False | video saved to videos/eval_ppo_bc_treechop/episode_000.mp4
+ep 001 | shaped   -2.48 | steps  165 | streak   0 | tree_view 0.23 | break_window False | video saved to videos/eval_ppo_bc_treechop/episode_001.mp4
+ep 002 | shaped  607.66 | steps  145 | streak 312 | tree_view 0.94 | break_window True | video saved to videos/eval_ppo_bc_treechop/episode_002.mp4
+ep 003 | shaped    7.13 | steps  275 | streak  24 | tree_view 0.11 | break_window True | video saved to videos/eval_ppo_bc_treechop/episode_003.mp4
+ep 004 | shaped   -4.67 | steps  188 | streak   0 | tree_view 0.03 | break_window False | video saved to videos/eval_ppo_bc_treechop/episode_004.mp4
+ep 005 | shaped   53.57 | steps  312 | streak  24 | tree_view 0.71 | break_window True | video saved to videos/eval_ppo_bc_treechop/episode_005.mp4
+ep 006 | shaped  379.06 | steps  157 | streak 208 | tree_view 0.98 | break_window True | video saved to videos/eval_ppo_bc_treechop/episode_006.mp4
+ep 007 | shaped   -5.00 | steps  136 | streak   0 | tree_view 0.00 | break_window False | video saved to videos/eval_ppo_bc_treechop/episode_007.mp4
+ep 008 | shaped   -5.00 | steps  138 | streak   0 | tree_view 0.00 | break_window False | video saved to videos/eval_ppo_bc_treechop/episode_008.mp4
+ep 009 | shaped  347.22 | steps  140 | streak 208 | tree_view 0.94 | break_window True | video saved to videos/eval_ppo_bc_treechop/episode_009.mp4
+
+--- evaluation summary ---
+shaped reward:     mean=137.82  std=211.32  min=-5.00  max=607.66
+avg steps:         205.5
+avg max streak:    78.6
+avg tree_view:     0.414
+break window rate: 0.50

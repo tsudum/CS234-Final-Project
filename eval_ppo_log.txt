@@ -1,0 +1,43 @@
+op_final.pt
+running 10 evaluation episodes...
+
+/home/andoan/.local/share/uv/python/cpython-3.9.25-linux-x86_64-gnu/lib/python3.9/runpy.py:127: RuntimeWarning: 'minerl.utils.process_watcher' found in sys.modules after import of package 'minerl.utils', but prior to execution of 'minerl.utils.process_watcher'; this may result in unpredictable behaviour
+  warn(RuntimeWarning(msg))
+ep 000 | shaped    9.96 | steps  275 | streak  30 | tree_view 0.11 | break_window False | video saved to videos/eval/episode_000.mp4
+ep 001 | shaped   87.37 | steps  253 | streak  24 | tree_view 0.55 | break_window True | video saved to videos/eval/episode_001.mp4
+ep 002 | shaped  103.78 | steps  257 | streak  32 | tree_view 0.81 | break_window True | video saved to videos/eval/episode_002.mp4
+ep 003 | shaped   -0.73 | steps  249 | streak  10 | tree_view 0.04 | break_window False | video saved to videos/eval/episode_003.mp4
+ep 004 | shaped   12.38 | steps  275 | streak   8 | tree_view 0.34 | break_window False | video saved to videos/eval/episode_004.mp4
+ep 005 | shaped   63.60 | steps  279 | streak  32 | tree_view 0.70 | break_window True | video saved to videos/eval/episode_005.mp4
+ep 006 | shaped   16.16 | steps  240 | streak  16 | tree_view 0.25 | break_window False | video saved to videos/eval/episode_006.mp4
+ep 007 | shaped   49.16 | steps  253 | streak  23 | tree_view 0.42 | break_window True | video saved to videos/eval/episode_007.mp4
+ep 008 | shaped   22.85 | steps  254 | streak  16 | tree_view 0.43 | break_window False | video saved to videos/eval/episode_008.mp4
+ep 009 | shaped  121.24 | steps  245 | streak  24 | tree_view 0.89 | break_window True | video saved to videos/eval/episode_009.mp4
+
+--- evaluation summary ---
+shaped reward:     mean=48.58  std=41.24  min=-0.73  max=121.24
+avg steps:         258.0
+avg max streak:    21.5
+avg tree_view:     0.455
+break window rate: 0.50
+The XKEYBOARD keymap compiler (xkbcomp) reports:
+> Warning:          Could not resolve keysym XF86CameraAccessEnable
+> Warning:          Could not resolve keysym XF86CameraAccessDisable
+> Warning:          Could not resolve keysym XF86CameraAccessToggle
+> Warning:          Could not resolve keysym XF86NextElement
+> Warning:          Could not resolve keysym XF86PreviousElement
+> Warning:          Could not resolve keysym XF86AutopilotEngageToggle
+> Warning:          Could not resolve keysym XF86MarkWaypoint
+> Warning:          Could not resolve keysym XF86Sos
+> Warning:          Could not resolve keysym XF86NavChart
+> Warning:          Could not resolve keysym XF86FishingChart
+> Warning:          Could not resolve keysym XF86SingleRangeRadar
+> Warning:          Could not resolve keysym XF86DualRangeRadar
+> Warning:          Could not resolve keysym XF86RadarOverlay
+> Warning:          Could not resolve keysym XF86TraditionalSonar
+> Warning:          Could not resolve keysym XF86ClearvuSonar
+> Warning:          Could not resolve keysym XF86SidevuSonar
+> Warning:          Could not resolve keysym XF86NavInfo
+Errors from xkbcomp are not fatal to the X server
+(.venv) andoan@a18a:~/win26/CS234-Final-Project$ 
+
